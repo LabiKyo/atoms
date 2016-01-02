@@ -6,6 +6,8 @@ import {
   REACTOR_X,
   REACTOR_Y,
 } from './consts';
+import ElementBall from './ElementBall';
+import elements from './elements';
 
 function drawReactor(container) {
   const image = queue.getResult('plus');
@@ -29,11 +31,20 @@ function drawDropArea(container) {
   container.addChild(area);
 }
 
+function drawElementBalls(container) {
+  elements.forEach((element) => {
+    const ball = new ElementBall(queue.getResult(`element-ball-${element}`));
+
+    container.addChild(ball);
+  });
+}
+
 function drawPage() {
   const page = new createjs.Container();
 
   drawDropArea(page);
   drawReactor(page);
+  drawElementBalls(page);
 
   stage.addChild(page);
   stage.update();

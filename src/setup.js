@@ -7,7 +7,7 @@ window.debug = require('debug');
 window.stage = new createjs.Stage('main');
 
 // setup ticker
-createjs.Ticker.setFPS(60);
+createjs.Ticker.setFPS(24);
 createjs.Ticker.addEventListener('tick', stage);
 
 // setup touch
