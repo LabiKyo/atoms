@@ -1,20 +1,44 @@
-import { PAGE_WIDTH, PAGE_HEIGHT } from './consts';
+import {
+  PAGE_WIDTH,
+  PAGE_HEIGHT,
+  REACTOR_WIDTH,
+  REACTOR_HEIGHT,
+  REACTOR_X,
+  REACTOR_Y,
+} from './consts';
 
-import image from './images/plus.png';
-const IMAGE_WIDTH = 111;
-const IMAGE_HEIGHT = 108;
-
-function drawReactor() {
+function drawReactor(container) {
+  const image = queue.getResult('plus');
   const reactor = new createjs.Bitmap(image);
 
   reactor.x = PAGE_WIDTH / 2;
   reactor.y = PAGE_HEIGHT / 2;
-  reactor.regX = IMAGE_WIDTH / 2;
-  reactor.regY = IMAGE_HEIGHT / 2;
+  reactor.regX = image.width / 2;
+  reactor.regY = image.height / 2;
 
-  stage.addChild(reactor);
+  container.addChild(reactor);
+}
+
+function drawDropArea(container) {
+  const area = new createjs.Shape();
+
+  area.graphics
+    .beginFill('#eeeeee')
+    .drawRect(REACTOR_X, REACTOR_Y, REACTOR_WIDTH, REACTOR_HEIGHT);
+
+  container.addChild(area);
+}
+
+function drawPage() {
+  const page = new createjs.Container();
+
+  drawDropArea(page);
+  drawReactor(page);
+
+  stage.addChild(page);
+  stage.update();
 }
 
 export default function() {
-  drawReactor();
+  drawPage();
 }

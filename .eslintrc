@@ -17,9 +17,12 @@
     jsx: true
   globals:
     createjs: false
+    require: false
+    debug: false
+
     stage: false
     router: false
-    require: false
+    queue: false
   rules:
     comma-dangle:
       - 2

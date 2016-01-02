@@ -3,14 +3,18 @@ import Grapnel from 'grapnel';
 import FrontPage from './FrontPage';
 import SelectionPage from './SelectionPage';
 
-// window.router = new Grapnel({ pushState: true });
-window.router = new Grapnel();
+function startRouter() {
+  // window.router = new Grapnel({ pushState: true });
+  window.router = new Grapnel();
 
-router.on('match', (e) => {
-  console.log('[Router match]', e.route);
-  stage.removeAllChildren();
-});
+  window.router.on('match', (event) => {
+    window.debug('atoms:route')('[match]', event.route);
+    stage.removeAllChildren();
+  });
 
-router.get('/', FrontPage);
+  window.router.get('/', FrontPage);
 
-router.get('/selection', SelectionPage);
+  window.router.get('/selection', SelectionPage);
+}
+
+queue.on('complete', startRouter);
