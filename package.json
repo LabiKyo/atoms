@@ -1,0 +1,21 @@
+{
+  "name": "atoms",
+  "version": "1.0.0",
+  "description": "atoms",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "createjs"
+  ],
+  "author": "Labi Kyo <labikyo@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "babel": "^5.8.34",
+    "babel-core": "^5.8.34",
+    "babel-loader": "^5.4.0",
+    "gulp": "^3.9.0",
+    "webpack": "^1.12.9"
+  }
+}
