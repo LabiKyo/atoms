@@ -32,7 +32,7 @@ function drawDropArea(container) {
 }
 
 function drawElementBalls(container) {
-  elements.forEach((element) => {
+  elements.reverse().forEach((element) => {
     const ball = new ElementBall(queue.getResult(`element-ball-${element}`));
 
     container.addChild(ball);
@@ -47,7 +47,6 @@ function drawPage() {
   drawElementBalls(page);
 
   stage.addChild(page);
-  stage.update();
 }
 
 export default function() {

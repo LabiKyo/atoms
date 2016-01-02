@@ -10,7 +10,7 @@ export default function() {
   text.regY = text.getMeasuredHeight() / 2;
 
   queue.on('progress', (e) => {
-    d('[progress]', e.loaded);
+    d('[progress] %s%%', (e.loaded * 100).toFixed(0));
     text.text = `Loading...(${(e.loaded * 100).toFixed(0)}%)`;
   });
 

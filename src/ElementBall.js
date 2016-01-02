@@ -8,6 +8,13 @@ import {
   SPEED_FACTOR,
   ROTATION_SPEED_FACTOR,
 } from './consts';
+import { V, Box, Circle, Response, testPolygonCircle } from 'sat';
+
+const reactionBox = new Box(
+  new V(REACTOR_X, REACTOR_Y),
+  REACTOR_WIDTH,
+  REACTOR_HEIGHT
+).toPolygon();
 
 export default class ElementBall {
   constructor(image) {
@@ -26,6 +33,7 @@ export default class ElementBall {
     this.speedX = 0;
     this.speedY = 0;
     this.speedRotate = 0;
+    this.response = new Response();
   }
   randomize() {
     do {
@@ -37,21 +45,12 @@ export default class ElementBall {
   setupBitmap() {
     this.bitmap.regX = this.radius;
     this.bitmap.regY = this.radius;
-    this.syncBitmap();
     this.bitmap.on('tick', this.onTick, this);
   }
 
   // handlers
   onTick() {
-    const newX = this.x + this.speedX;
-    const newY = this.y + this.speedY;
-
-    if (!this.isXValid(newX) || newX < 0 || newX > PAGE_WIDTH) {
-      this.speedX = -this.speedX;
-    }
-    if (!this.isYValid(newY) || newY < 0 || newY > PAGE_HEIGHT) {
-      this.speedY = -this.speedY;
-    }
+    this.detectCollision();
     this.x = this.x + this.speedX;
     this.y = this.y + this.speedY;
     this.rotation = this.rotation + this.speedRotate;
@@ -80,18 +79,31 @@ export default class ElementBall {
     this.speedRotate = this.getRandomDirection() * ROTATION_SPEED_FACTOR;
   }
   isPositionValid() {
-    return this.isXValid() && this.isYValid();
+    this.circle = new Circle(new V(this.x, this.y), this.radius);
+    this.response.clear();
+    return !testPolygonCircle(reactionBox, this.circle, this.response);
   }
-  isXValid(x = this.x) {
-    return (
-      x + this.radius < REACTOR_X ||
-      x - this.radius > REACTOR_X + REACTOR_WIDTH
-    );
-  }
-  isYValid(y = this.y) {
-    return (
-      y + this.radius < REACTOR_Y ||
-      y - this.radius > REACTOR_Y + REACTOR_HEIGHT
-    );
+  detectCollision() {
+    const newX = this.x + this.speedX;
+    const newY = this.y + this.speedY;
+    const newCircle = new Circle(new V(newX, newY), this.radius);
+
+    this.response.clear();
+    const collided = testPolygonCircle(reactionBox, newCircle, this.response);
+
+    if (
+      (collided && this.response.overlapV.x) ||
+      newX < 0 ||
+      newX > PAGE_WIDTH
+    ) {
+      this.speedX = -this.speedX;
+    }
+    if (
+      (collided && this.response.overlapV.y) ||
+      newY < 0 ||
+      newY > PAGE_HEIGHT
+    ) {
+      this.speedY = -this.speedY;
+    }
   }
 }

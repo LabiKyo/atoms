@@ -8,7 +8,7 @@ function startRouter() {
   window.router = new Grapnel();
 
   window.router.on('match', (event) => {
-    window.debug('atoms:route')('[match]', event.route);
+    window.debug('atoms:route')('[match] %s', event.route);
     stage.removeAllChildren();
   });
 
