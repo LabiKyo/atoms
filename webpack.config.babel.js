@@ -1,10 +1,12 @@
 /* global __dirname: true */
+import webpack from 'webpack';
+
 export default {
   entry: './index.js',
   output: {
     path: __dirname + '/static',
     filename: 'bundle.js',
-    publicPath: '/static',
+    publicPath: '/static/',
   },
   module: {
     loaders: [
@@ -13,7 +15,16 @@ export default {
         exclude: /node_modules/,
         loader: 'babel',
       },
+      {
+        test: /\.(png|jpg|jpeg)$/,
+        exclude: /node_modules/,
+        loader: 'file',
+      },
     ],
   },
   devtool: 'inline-source-map',
+  plugins: [
+    new webpack.ProvidePlugin({
+    }),
+  ],
 };

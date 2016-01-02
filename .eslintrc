@@ -17,6 +17,9 @@
     jsx: true
   globals:
     createjs: false
+    stage: false
+    router: false
+    require: false
   rules:
     comma-dangle:
       - 2
