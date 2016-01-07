@@ -1,8 +1,6 @@
-import { PAGE_WIDTH, PAGE_HEIGHT } from './consts';
-
 export default function() {
   const d = window.debug('atoms:queue');
-  const text = new createjs.Text('Loading...(0%)', '120px Arial');
+  const text = new createjs.Text('Loading...(0%)', '40px Arial');
 
   text.x = PAGE_WIDTH / 2;
   text.y = PAGE_HEIGHT / 2;

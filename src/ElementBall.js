@@ -1,14 +1,13 @@
 import {
-  PAGE_WIDTH,
-  PAGE_HEIGHT,
   REACTOR_WIDTH,
   REACTOR_HEIGHT,
-  REACTOR_X,
-  REACTOR_Y,
   SPEED_FACTOR,
   ROTATION_SPEED_FACTOR,
 } from './consts';
 import { V, Box, Circle, Response, testPolygonCircle } from 'sat';
+
+const REACTOR_X = (PAGE_WIDTH - REACTOR_WIDTH) / 2;
+const REACTOR_Y = (PAGE_HEIGHT - REACTOR_HEIGHT) / 2;
 
 const reactionBox = new Box(
   new V(REACTOR_X, REACTOR_Y),
@@ -19,7 +18,7 @@ const reactionBox = new Box(
 export default class ElementBall {
   constructor(image) {
     this.bitmap = new createjs.Bitmap(image);
-    this.radius = image.width / 2;
+    this.radius = image.width / 3 / 2;
     this.initialize();
     this.randomize();
     this.setupBitmap();
@@ -43,9 +42,14 @@ export default class ElementBall {
     this.getRandomSpeed();
   }
   setupBitmap() {
-    this.bitmap.regX = this.radius;
-    this.bitmap.regY = this.radius;
+    this.bitmap.regX = this.radius * 3;
+    this.bitmap.regY = this.radius * 3;
+    this.bitmap.scaleX = 1 / 3;
+    this.bitmap.scaleY = 1 / 3;
     this.bitmap.on('tick', this.onTick, this);
+    this.bitmap.on('click', () => {
+      console.log('bitmap click');
+    });
   }
 
   // handlers
