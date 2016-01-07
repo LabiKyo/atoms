@@ -1,6 +1,5 @@
 import Slider from './Slider';
 import { INTRO_PAGE_SEP_MARGIN, INTRO_PAGE_BODY_HEIGHT } from './consts';
-import sprites from './sprites';
 
 function positionMapping(part) {
   const mapping = {
@@ -11,7 +10,7 @@ function positionMapping(part) {
   };
 
   return mapping[part];
-};
+}
 
 function addBitmap(part, element) {
   const image = queue.getResult(`intro-${part}-${element}`);
@@ -31,7 +30,12 @@ function drawSeperator(container) {
   seperator.graphics
     .setStrokeStyle(8)
     .beginStroke('rgba(151, 151, 151, 0.3)')
-    .drawRect(-28, INTRO_PAGE_SEP_MARGIN, 600, PAGE_HEIGHT - INTRO_PAGE_SEP_MARGIN - INTRO_PAGE_SEP_MARGIN - 16);
+    .drawRect(
+      -28,
+      INTRO_PAGE_SEP_MARGIN,
+      600,
+      PAGE_HEIGHT - INTRO_PAGE_SEP_MARGIN - INTRO_PAGE_SEP_MARGIN - 16
+    );
   container.addChild(seperator);
 }
 
@@ -57,18 +61,16 @@ function drawSlider(element, container) {
       regX: 200,
       regY: 200,
     },
-    animations: {
-      play: [0, sprites[element]],
-    },
   });
-  const sprite = new createjs.Sprite(spritesheet, 'play');
+  const sprite = new createjs.Sprite(spritesheet);
 
   sprite.x = PAGE_WIDTH / 2;
   sprite.y = PAGE_HEIGHT / 2;
+  sprite.play();
 
   const secondPage = new createjs.Container();
 
-  secondPage.addChild(sprite, addBitmap('second', element))
+  secondPage.addChild(sprite, addBitmap('second', element));
 
   const slider = new Slider([
     addBitmap('body', element),

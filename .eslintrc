@@ -23,8 +23,8 @@
     stage: false
     router: false
     queue: false
-    PAGE_WIDTH
-    PAGE_HEIGHT
+    PAGE_WIDTH: false
+    PAGE_HEIGHT: false
   rules:
     comma-dangle:
       - 2

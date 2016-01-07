@@ -1,4 +1,3 @@
-import { REACTOR_WIDTH, REACTOR_HEIGHT } from './consts';
 import ElementBall from './ElementBall';
 import elements from './elements';
 
@@ -14,18 +13,6 @@ function drawReactor(container) {
   reactor.regY = image.height / 2;
 
   container.addChild(reactor);
-}
-
-function drawDropArea(container) {
-  const area = new createjs.Shape();
-  const x = (PAGE_WIDTH - REACTOR_WIDTH) / 2;
-  const y = (PAGE_HEIGHT - REACTOR_HEIGHT) / 2;
-
-  area.graphics
-    .beginFill('#eeeeee')
-    .drawRect(x, y, REACTOR_WIDTH, REACTOR_HEIGHT);
-
-  container.addChild(area);
 }
 
 function drawElementBalls(container) {

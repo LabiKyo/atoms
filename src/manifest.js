@@ -9,6 +9,10 @@ let manifest = [
     id: 'bgm',
     src: require('./bgm.mp3'),
   },
+  {
+    id: 'logo-spritesheet',
+    src: require('./images/logo-spritesheet.png'),
+  },
 ];
 
 // preload element balls
@@ -24,9 +28,10 @@ elements.forEach((element) => {
   const parts = [ 'header', 'footer', 'body', 'second', 'spritesheet' ].map((part) => {
     return {
       id: `intro-${part}-${element}`,
-      src: require(`./images/intro/${part}-${element}.png`)
+      src: require(`./images/intro/${part}-${element}.png`),
     };
   });
+
   manifest = manifest.concat(parts);
 });
 

@@ -1,5 +1,5 @@
 import Indicator from './Indicator';
-import { INTRO_PAGE_SEP_MARGIN, INTRO_PAGE_BODY_HEIGHT } from './consts';
+import { INTRO_PAGE_SEP_MARGIN } from './consts';
 
 export default class Slider {
   constructor(children = []) {
@@ -29,12 +29,11 @@ export default class Slider {
 
     const marginLeft = (PAGE_WIDTH - this.size * 20) / 2;
 
-    for (let i = 0; i < this.size; ++i) {
+    for (let i = 0; i < this.size; i += 1) {
       const indicator = new Indicator(i === this.active);
-      const circle = indicator.circle;
 
-      circle.x = marginLeft + i * 20;
-      this.indicatorContainer.addChild(circle);
+      indicator.circle.x = marginLeft + i * 20;
+      this.indicatorContainer.addChild(indicator.circle);
       this.indicators.push(indicator);
     }
 
@@ -46,7 +45,14 @@ export default class Slider {
   drawHitArea() {
     const shape = new createjs.Shape();
 
-    shape.graphics.beginFill('grey').drawRect(0, INTRO_PAGE_SEP_MARGIN, PAGE_WIDTH, PAGE_HEIGHT - INTRO_PAGE_SEP_MARGIN * 2);
+    shape.graphics
+      .beginFill('grey')
+      .drawRect(
+        0,
+        INTRO_PAGE_SEP_MARGIN,
+        PAGE_WIDTH,
+        PAGE_HEIGHT - INTRO_PAGE_SEP_MARGIN * 2
+      );
 
     this.container.hitArea = shape;
   }
@@ -70,16 +76,21 @@ export default class Slider {
 
     if (this.isDistanceValid(distance)) {
       if (distance < -PAGE_WIDTH / 2 || speed < -PAGE_WIDTH / 1.5) {
-        this.toggleIndicators([this.active, this.active + 1]);
+        this.toggleIndicators([ this.active, this.active + 1 ]);
         this.active += 1;
       }
       if (distance > PAGE_WIDTH / 2 || speed > PAGE_WIDTH / 1.5) {
-        this.toggleIndicators([this.active, this.active - 1]);
+        this.toggleIndicators([ this.active, this.active - 1 ]);
         this.active -= 1;
       }
     }
 
-    createjs.Tween.get(this.pages).to({ x: -this.active * PAGE_WIDTH }, 200, createjs.Ease.circOut());
+    createjs.Tween.get(this.pages)
+      .to(
+        { x: -this.active * PAGE_WIDTH },
+        200,
+        createjs.Ease.circOut()
+      );
   }
 
   // helpers

@@ -1,12 +1,27 @@
 function drawPage() {
   const page = new createjs.Container();
-  const hitArea = new createjs.Shape();
 
-  hitArea.graphics.beginFill('#000').rect(0, 0, PAGE_WIDTH, PAGE_HEIGHT);
-  page.hitArea = hitArea;
+  const spritesheet = new createjs.SpriteSheet({
+    images: [queue.getResult('logo-spritesheet')],
+    frames: {
+      width: 200,
+      height: 300,
+      regX: 100,
+      regY: 150,
+    },
+  });
+  const sprite = new createjs.Sprite(spritesheet);
 
-  page.addEventListener('click', () => {
-    router.navigate('/selection');
+  sprite.x = PAGE_WIDTH / 2;
+  sprite.y = PAGE_HEIGHT * 0.33;
+
+  page.addChild(sprite);
+  sprite.play();
+  sprite.on('animationend', () => {
+    sprite.gotoAndStop(63);
+    setTimeout(() => {
+      router.navigate('/selection');
+    }, 1000);
   });
 
   stage.addChild(page);
