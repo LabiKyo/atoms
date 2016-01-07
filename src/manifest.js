@@ -6,8 +6,8 @@ let manifest = [
     src: require('./images/plus.png'),
   },
   {
-    id: 'logo',
-    src: require('./images/logo.png'),
+    id: 'bgm',
+    src: require('./bgm.mp3'),
   },
 ];
 

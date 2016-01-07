@@ -16,7 +16,7 @@ export default {
         loader: 'babel',
       },
       {
-        test: /\.(png|jpg|jpeg)$/,
+        test: /\.(png|jpg|jpeg|mp3)$/,
         exclude: /node_modules/,
         loader: 'file',
       },
