@@ -1,3 +1,7 @@
+function navigateToSelection() {
+  router.navigate('/selection');
+}
+
 function drawPage() {
   const page = new createjs.Container();
 
@@ -20,7 +24,10 @@ function drawPage() {
   sprite.on('animationend', () => {
     sprite.gotoAndStop(63);
     setTimeout(() => {
-      router.navigate('/selection');
+      createjs.Tween.get(sprite).to({
+        alpha: 0,
+      }, 800, createjs.Ease.quintOut())
+      .call(navigateToSelection);
     }, 1000);
   });
 

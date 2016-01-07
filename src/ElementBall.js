@@ -46,7 +46,12 @@ export default class ElementBall {
     this.bitmap.regY = this.radius * 3;
     this.bitmap.scaleX = 1 / 3;
     this.bitmap.scaleY = 1 / 3;
+    this.bitmap.alpha = 0;
     this.bitmap.on('tick', this.onTick, this);
+
+    createjs.Tween.get(this.bitmap).to({
+      alpha: 1,
+    }, 800, createjs.Ease.quintIn());
   }
 
   // handlers
