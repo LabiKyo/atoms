@@ -9,7 +9,7 @@ export default class Indicator {
     this.circle.regY = RADIUS / 2;
     this.draw();
 
-    return this.circle;
+    return this;
   }
   draw() {
     const color = this.isActive ? '#9A9A9A' : '#D8D8D8';

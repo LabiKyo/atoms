@@ -71,8 +71,8 @@ function drawSlider(element, container) {
   secondPage.addChild(sprite, addBitmap('second', element))
 
   const slider = new Slider([
-    secondPage,
     addBitmap('body', element),
+    secondPage,
   ]);
 
   container.addChild(slider);

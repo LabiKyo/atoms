@@ -20,7 +20,7 @@ elements.forEach((element) => {
 });
 
 // preload element intro page
-['h', 'he'].forEach((element) => {
+elements.forEach((element) => {
   const parts = [ 'header', 'footer', 'body', 'second', 'spritesheet' ].map((part) => {
     return {
       id: `intro-${part}-${element}`,

@@ -47,9 +47,6 @@ export default class ElementBall {
     this.bitmap.scaleX = 1 / 3;
     this.bitmap.scaleY = 1 / 3;
     this.bitmap.on('tick', this.onTick, this);
-    this.bitmap.on('click', () => {
-      console.log('bitmap click');
-    });
   }
 
   // handlers

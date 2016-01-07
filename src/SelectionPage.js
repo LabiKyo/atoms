@@ -32,18 +32,12 @@ function drawElementBalls(container) {
   elements.reverse().forEach((element) => {
     const ball = new ElementBall(queue.getResult(`element-ball-${element}`));
 
+    ball.on('click', () => {
+      router.navigate(`/intro/${element}`);
+    });
+
     container.addChild(ball);
   });
-}
-
-function drawMask(container) {
-  const mask = new createjs.Shape();
-
-  mask.graphics.beginFill('#000000').drawRect(0, 0, PAGE_WIDTH, PAGE_HEIGHT);
-  mask.alpha = 0;
-
-  container.addChild(mask);
-  return mask;
 }
 
 function drawPage() {
