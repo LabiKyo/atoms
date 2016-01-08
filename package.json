@@ -4,6 +4,9 @@
   "description": "atoms",
   "main": "index.js",
   "scripts": {
+    "dev": "./node_modules/.bin/webpack -w",
+    "serve-dev": "./node_modules/.bin/http-server",
+    "build": "./node_modules/.bin/webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -19,7 +22,9 @@
     "file-loader": "^0.8.5",
     "grapnel": "^0.6.3",
     "gulp": "^3.9.0",
+    "http-server": "^0.8.5",
     "sat": "^0.5.0",
+    "shake.js": "^1.2.2",
     "webpack": "^1.12.9"
   }
 }
