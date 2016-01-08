@@ -25,6 +25,8 @@
     queue: false
     PAGE_WIDTH: false
     PAGE_HEIGHT: false
+    isDragging: false
+    draggingElement: false
   rules:
     comma-dangle:
       - 2

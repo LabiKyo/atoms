@@ -16,7 +16,9 @@ const reactionBox = new Box(
 ).toPolygon();
 
 export default class ElementBall {
-  constructor(image) {
+  constructor(image, element) {
+    this.element = element;
+    this.image = image;
     this.bitmap = new createjs.Bitmap(image);
     this.radius = image.width / 3 / 2;
     this.initialize();
@@ -47,7 +49,10 @@ export default class ElementBall {
     this.bitmap.scaleX = 1 / 3;
     this.bitmap.scaleY = 1 / 3;
     this.bitmap.alpha = 0;
-    this.bitmap.on('tick', this.onTick, this);
+    this.tickListener = this.bitmap.on('tick', this.onTick, this);
+    this.bitmap.on('mousedown', this.onPressStart, this);
+    this.bitmap.on('pressmove', this.onPressMove, this);
+    this.bitmap.on('pressup', this.onPressEnd, this);
 
     createjs.Tween.get(this.bitmap).to({
       alpha: 1,
@@ -61,6 +66,25 @@ export default class ElementBall {
     this.y = this.y + this.speedY;
     this.rotation = this.rotation + this.speedRotate;
     this.syncBitmap();
+  }
+  onPressStart(e) {
+    this.bitmap.off('tick', this.tickListener);
+    this.startTime = e.timeStamp;
+    window.isDragging = true;
+    window.draggingElement = this;
+  }
+  onPressMove(e) {
+    this.bitmap.x = e.stageX / 2;
+    this.bitmap.y = e.stageY / 2;
+  }
+  onPressEnd(e) {
+    const time = e.timeStamp - this.startTime;
+
+    this.tickListener = this.bitmap.on('tick', this.onTick, this);
+    window.isDragging = false;
+    if (time < 50) {
+      router.navigate(`/intro/${this.element}`);
+    }
   }
 
   // helpers

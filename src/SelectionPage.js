@@ -1,6 +1,7 @@
 import Shake from 'shake.js';
 
 import ElementBall from './ElementBall';
+import ReactionArea from './ReactionArea';
 import elements from './elements';
 
 class SelectionPage {
@@ -37,7 +38,9 @@ class SelectionPage {
     reactor.regX = image.width / 2;
     reactor.regY = image.height / 2;
 
-    this.page.addChild(reactor);
+    this.area = new ReactionArea();
+
+    this.page.addChild(reactor, this.area.container);
 
     createjs.Tween.get(reactor).to({
       scaleX: 1 / 3,
@@ -59,11 +62,7 @@ class SelectionPage {
   drawElementBalls() {
     this.ballContainer.removeAllChildren();
     elements.reverse().forEach((element) => {
-      const ball = new ElementBall(queue.getResult(`element-ball-${element}`));
-
-      ball.on('click', () => {
-        router.navigate(`/intro/${element}`);
-      });
+      const ball = new ElementBall(queue.getResult(`element-ball-${element}`), element, this.area);
 
       this.ballContainer.addChild(ball);
     });
