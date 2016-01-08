@@ -28,8 +28,8 @@ export default class ReactionArea {
       this.setState('hover');
     });
     stage.on('pressmove', (e) => {
-      const x = e.stageX / 2;
-      const y = e.stageY / 2;
+      const x = e.stageX / window.devicePixelRatio;
+      const y = e.stageY / window.devicePixelRatio;
 
       if (this.isEnter(x, y)) {
         if (this.firstElement) {
@@ -49,8 +49,8 @@ export default class ReactionArea {
       }
     });
     stage.on('pressup', (e) => {
-      const x = e.stageX / 2;
-      const y = e.stageY / 2;
+      const x = e.stageX / window.devicePixelRatio;
+      const y = e.stageY / window.devicePixelRatio;
 
       this.setState('');
 
@@ -61,16 +61,24 @@ export default class ReactionArea {
           this.firstOriginElement.bitmap.visible = false;
           this.firstElement.bitmap.y = 65;
           this.container.addChild(this.firstElement.bitmap);
-        } else {
-          if (
-            reactions[this.firstElement.element] &&
-            reactions[this.firstElement.element].indexOf(draggingElement.element) !== -1
-          ) {
-            this.secondElement = new ElementBallClone(draggingElement, this);
-            this.secondOriginElement = draggingElement;
-            this.secondOriginElement.bitmap.visible = false;
-            this.secondElement.bitmap.y = 214;
-            this.container.addChild(this.secondElement.bitmap);
+        } else if (
+          reactions[this.firstElement.element] &&
+          reactions[this.firstElement.element].indexOf(draggingElement.element) !== -1
+        ) {
+          this.secondElement = new ElementBallClone(draggingElement, this);
+          this.secondOriginElement = draggingElement;
+          this.secondOriginElement.bitmap.visible = false;
+          this.secondElement.bitmap.y = 214;
+          this.container.addChild(this.secondElement.bitmap);
+
+          const e1 = this.firstElement.element;
+          const e2 = this.secondElement.element;
+          let result = queue.getResult(`video-${e1}+${e2}`);
+
+          if (result) {
+            router.navigate(`/reaction/${e1}+${e2}`);
+          } else {
+            router.navigate(`/reaction/${e2}+${e1}`);
           }
         }
       }

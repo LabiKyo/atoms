@@ -35,4 +35,17 @@ elements.forEach((element) => {
   manifest = manifest.concat(parts);
 });
 
+[
+  'h+o',
+  // 'h+f',
+  // 'b+cl',
+  // 'al+cl',
+].forEach((reaction) => {
+  manifest.push({
+    id: `video-${reaction}`,
+    src: require(`./videos/${reaction}.mp4`),
+    type: createjs.AbstractLoader.VIDEO,
+  });
+});
+
 export default manifest;

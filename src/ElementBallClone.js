@@ -32,11 +32,11 @@ export default class ElementBallClone {
     this.originY = this.bitmap.y;
   }
   onPressMove(e) {
-    this.bitmap.x = e.stageX / 2 - REACTOR_X;
-    this.bitmap.y = e.stageY / 2 - REACTOR_Y;
+    this.bitmap.x = e.stageX / window.devicePixelRatio - REACTOR_X;
+    this.bitmap.y = e.stageY / window.devicePixelRatio - REACTOR_Y;
   }
   onPressEnd(e) {
-    if (this.isEnter(e.stageX / 2, e.stageY / 2)) {
+    if (this.isEnter(e.stageX / window.devicePixelRatio, e.stageY / window.devicePixelRatio)) {
       createjs.Tween.get(this.bitmap).to({
         x: this.originX,
         y: this.originY,

@@ -74,8 +74,8 @@ export default class ElementBall {
     window.draggingElement = this;
   }
   onPressMove(e) {
-    this.bitmap.x = e.stageX / 2;
-    this.bitmap.y = e.stageY / 2;
+    this.bitmap.x = e.stageX / window.devicePixelRatio;
+    this.bitmap.y = e.stageY / window.devicePixelRatio;
   }
   onPressEnd(e) {
     const time = e.timeStamp - this.startTime;
