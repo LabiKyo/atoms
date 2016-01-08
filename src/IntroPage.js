@@ -13,13 +13,14 @@ function positionMapping(part) {
 }
 
 function addBitmap(part, element) {
+  const ratio = Math.min(1, PAGE_WIDTH / 375) / 3;
   const image = queue.getResult(`intro-${part}-${element}`);
   const bitmap = new createjs.Bitmap(image);
 
-  bitmap.x = (PAGE_WIDTH - image.width / 3) / 2;
+  bitmap.x = (PAGE_WIDTH - image.width * ratio) / 2;
   bitmap.y = positionMapping(part);
-  bitmap.scaleX = 1 / 3;
-  bitmap.scaleY = 1 / 3;
+  bitmap.scaleX = ratio;
+  bitmap.scaleY = ratio;
 
   return bitmap;
 }
