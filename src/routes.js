@@ -21,6 +21,8 @@ function startRouter() {
   router.get('/intro/:element', IntroPage);
 
   router.get('/reaction/:reaction', ReactionPage);
+
+  router.navigate('/');
 }
 
 queue.on('complete', startRouter);
