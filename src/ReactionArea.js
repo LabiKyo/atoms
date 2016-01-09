@@ -24,67 +24,21 @@ export default class ReactionArea {
 
     this.firstElement = null;
 
-    stage.on('mousedown', () => {
-      this.setState('hover');
-    });
-    stage.on('pressmove', (e) => {
-      const x = e.stageX / window.devicePixelRatio;
-      const y = e.stageY / window.devicePixelRatio;
-
-      if (this.isEnter(x, y)) {
-        if (this.firstElement) {
-          if (
-            reactions[this.firstElement.element] &&
-            reactions[this.firstElement.element].indexOf(draggingElement.element) !== -1
-          ) {
-            this.setState('right');
-          } else {
-            this.setState('wrong');
-          }
-        } else {
-          this.setState('right');
-        }
-      } else {
-        this.setState('hover');
-      }
-    });
-    stage.on('pressup', (e) => {
-      const x = e.stageX / window.devicePixelRatio;
-      const y = e.stageY / window.devicePixelRatio;
-
-      this.setState('');
-
-      if (this.isEnter(x, y)) {
-        if (!this.firstElement) {
-          this.firstElement = new ElementBallClone(draggingElement, this);
-          this.firstOriginElement = draggingElement;
-          this.firstOriginElement.bitmap.visible = false;
-          this.firstElement.bitmap.y = 65;
-          this.container.addChild(this.firstElement.bitmap);
-        } else if (
-          reactions[this.firstElement.element] &&
-          reactions[this.firstElement.element].indexOf(draggingElement.element) !== -1
-        ) {
-          this.secondElement = new ElementBallClone(draggingElement, this);
-          this.secondOriginElement = draggingElement;
-          this.secondOriginElement.bitmap.visible = false;
-          this.secondElement.bitmap.y = 214;
-          this.container.addChild(this.secondElement.bitmap);
-
-          const e1 = this.firstElement.element;
-          const e2 = this.secondElement.element;
-          let result = queue.getResult(`video-${e1}+${e2}`);
-
-          if (result) {
-            router.navigate(`/reaction/${e1}+${e2}`);
-          } else {
-            router.navigate(`/reaction/${e2}+${e1}`);
-          }
-        }
-      }
-    });
+    this.setupHandler();
 
     return this;
+  }
+  setupHandler() {
+    this.handlers = [
+      stage.on('mousedown', this.onPressStart, this),
+      stage.on('pressmove', this.onPressMove, this),
+      stage.on('pressup', this.onPressEnd, this),
+    ];
+  }
+  clearHandler() {
+    stage.off('mousedown', this.handlers[0]);
+    stage.off('pressmove', this.handlers[1]);
+    stage.off('pressup', this.handlers[2]);
   }
   drawHoverShape() {
     this.hoverShape = new createjs.Shape();
@@ -123,6 +77,67 @@ export default class ReactionArea {
     [ 'hover', 'right', 'wrong' ].forEach((s) => {
       this[`${s}Shape`].visible = state === s;
     });
+  }
+  // handlers
+  onPressStart() {
+    this.setState('hover');
+  }
+  onPressMove(e) {
+    const x = e.stageX / window.devicePixelRatio;
+    const y = e.stageY / window.devicePixelRatio;
+
+    if (this.isEnter(x, y)) {
+      if (this.firstElement) {
+        if (
+          reactions[this.firstElement.element] &&
+          reactions[this.firstElement.element].indexOf(draggingElement.element) !== -1
+        ) {
+          this.setState('right');
+        } else {
+          this.setState('wrong');
+        }
+      } else {
+        this.setState('right');
+      }
+    } else {
+      this.setState('hover');
+    }
+  }
+  onPressEnd(e) {
+    const x = e.stageX / window.devicePixelRatio;
+    const y = e.stageY / window.devicePixelRatio;
+
+    this.setState('');
+
+    if (this.isEnter(x, y)) {
+      if (!this.firstElement) {
+        this.firstElement = new ElementBallClone(draggingElement, this);
+        this.firstOriginElement = draggingElement;
+        this.firstOriginElement.bitmap.visible = false;
+        this.firstElement.bitmap.y = 65;
+        this.container.addChild(this.firstElement.bitmap);
+      } else if (
+        reactions[this.firstElement.element] &&
+        reactions[this.firstElement.element].indexOf(draggingElement.element) !== -1
+      ) {
+        this.secondElement = new ElementBallClone(draggingElement, this);
+        this.secondOriginElement = draggingElement;
+        this.secondOriginElement.bitmap.visible = false;
+        this.secondElement.bitmap.y = 214;
+        this.container.addChild(this.secondElement.bitmap);
+
+        const e1 = this.firstElement.element;
+        const e2 = this.secondElement.element;
+        let result = queue.getResult(`video-${e1}+${e2}`);
+
+        if (result) {
+          router.navigate(`/reaction/${e1}+${e2}`);
+        } else {
+          router.navigate(`/reaction/${e2}+${e1}`);
+        }
+        this.clearHandler();
+      }
+    }
   }
 
   // helpers

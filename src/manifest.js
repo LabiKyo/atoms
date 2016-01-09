@@ -37,9 +37,9 @@ elements.forEach((element) => {
 
 [
   'h+o',
-  // 'h+f',
-  // 'b+cl',
-  // 'al+cl',
+  'h+f',
+  'b+cl',
+  'al+cl',
 ].forEach((reaction) => {
   manifest.push({
     id: `video-${reaction}`,
